@@ -10,6 +10,8 @@ class TodoList extends Component {
 		isDelete: false,
 		isCreate: false,
 	}
+
+	
 	
 	// пропс завжди перший (або _), стейт завжди другий
 	componentDidUpdate(_, prevState) {

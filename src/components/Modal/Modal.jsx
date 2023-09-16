@@ -1,5 +1,24 @@
-const Modal = ({ children, closeModal }) => {
-	return (
+import { Component } from "react";
+
+class Modal extends Component {
+	state = {}
+
+	componentDidMount() { 
+		window.addEventListener('keydown', this.handlePressESC)
+	}
+
+	componentWillUnmount() {
+		window.removeEventListener('keydown', this.handlePressESC)
+	 }
+	
+	handlePressESC = (e) => {
+		// console.log('object :>> ', Date.now())
+		if (e.code === 'Escape') this.props.closeModal()
+	}
+
+	render() {
+		const {closeModal, children} = this.props
+		return (
 		<div
 			className='modal fade show'
 			style={{ display: 'block', backdropFilter: 'blur(5px)' }}
@@ -20,6 +39,8 @@ const Modal = ({ children, closeModal }) => {
 			</div>
 		</div>
 	)
+	}
 }
 
-export default Modal
+
+export default Modal;
