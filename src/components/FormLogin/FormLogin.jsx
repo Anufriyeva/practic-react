@@ -8,6 +8,18 @@ class FormLogin extends Component {
 		gender: 'male',
     }
 
+    // componentDidMount() { 
+    //     console.log('Mount');
+    // }
+    
+    // componentDidUpdate(prevProps, prevState) { 
+    //     console.log('Update');
+    // } 
+
+    // componentWillUnmount() {
+    //     console.log('Unmount');
+    //  }
+
     handleChange = ({ target }) => {
         this.setState({
 			[target.name]: target.value,

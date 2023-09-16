@@ -11,6 +11,7 @@ class App extends Component {
     isShowModal: false
   }
 
+
   showModal = () => {
     this.setState({isShowModal: true})
   }
