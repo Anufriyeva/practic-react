@@ -1,17 +1,23 @@
 import React, { Component } from 'react'
-import todo from '../../todo.json'
+// import todo from '../../todo.json'
 import ToDo from '../ToDo/ToDo'
 import FormToDo from '../FormToDo/FormToDo'
 import { nanoid } from 'nanoid'
 
 class TodoList extends Component {
     state = {
-		todoList: todo,
+		todoList: '',
 		isDelete: false,
 		isCreate: false,
 	}
 
-	
+	componentDidMount() {
+		// localStorage.setItem('todo', JSON.stringify(todo))
+		if (localStorage.getItem('todo'))
+			this.setState({
+				todoList: JSON.parse(localStorage.getItem('todo')),
+			})
+	}
 	
 	// пропс завжди перший (або _), стейт завжди другий
 	componentDidUpdate(_, prevState) {
@@ -23,20 +29,26 @@ class TodoList extends Component {
 		// if (prevState.todoList.length < this.state.todoList.length)
 		// 	console.log('Add');
 
-		if (prevState.todoList.length > this.state.todoList.length)
-		{
-			this.setState({ isDelete: true })
+		if (prevState.todoList.length > this.state.todoList.length) {
+			localStorage.setItem('todo', JSON.stringify(this.state.todoList))
+			this.setState({
+				isDelete: true,
+				// todo: localStorage.getItem('todo'),
+			})
 			setTimeout(() => {
-				this.setState({ isDelete: false })				
-			}, 1500);		
+				this.setState({ isDelete: false })
+			}, 1500)
 		}
-
 		if (prevState.todoList.length < this.state.todoList.length) {
-			this.setState({ isCreate: true })
+			localStorage.setItem('todo', JSON.stringify(this.state.todoList))
+			this.setState({
+				isCreate: true,
+				// todo: localStorage.getItem('todo'),
+			})
 			setTimeout(() => {
 				this.setState({ isCreate: false })
 			}, 1500)
-		};		
+		}		
 		} 
 
     handleCheckCompleted = (id) => {
@@ -45,7 +57,7 @@ class TodoList extends Component {
 				todo.id === id ? { ...todo, completed: !todo.completed } : todo
 			),
 		}))
-    }
+	}
     
     handleDelete = (id) => {
 		this.setState((prev) => ({
@@ -68,25 +80,29 @@ class TodoList extends Component {
 		return (
 			<>
 				<h1>My To-Do list</h1>
-				{this.state.isDelete && (<div className="alert alert-danger" role="alert">
-					To-do delete successfully!
-				</div>)}
-
-				{this.state.isCreate && (<div className="alert alert-success" role="alert">
-					To-do create successfully!
-				</div>)}
-				
+				{this.state.isDelete && (
+					<div className='alert alert-danger' role='alert'>
+						To-do delete successfully!
+					</div>
+				)}
+				{this.state.isCreate && (
+					<div className='alert alert-success' role='alert'>
+						Create to-do successfully!
+					</div>
+				)}
 				<FormToDo addToDo={this.addToDo} />
-				<ul className='list-group list-group-flush'>
-					{this.state.todoList.map((todo) => (
-                        <ToDo
-                            key={todo.id}
-							todo={todo}
-							handleCheckCompleted={this.handleCheckCompleted}
-                            handleDelete={this.handleDelete}
-                        />
-					))}
-				</ul>
+				{this.state.todoList && (
+					<ul className='list-group list-group-flush'>
+						{this.state.todoList.map((todo) => (
+							<ToDo
+								key={todo.id}
+								todo={todo}
+								handleCheckCompleted={this.handleCheckCompleted}
+								handleDelete={this.handleDelete}
+							/>
+						))}
+					</ul>
+				)}
 			</>
 		)
 	}
