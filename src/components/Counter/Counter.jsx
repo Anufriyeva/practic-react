@@ -1,17 +1,49 @@
-import React, { Component, PureComponent, useState } from 'react'
+import React, { Component, PureComponent, useReducer, useState } from 'react'
 
+function reducer(prevState, action) {
+	if (action.type === 'increment')
+		return prevState + action.payload
+	else return prevState - action.payload
+}
+
+// function reducer(prevState, action) {
+// 	if (action.type === 'createUser') {
+// 		return {
+// 			...prevState, user: action.payload
+// 		}
+// 	}
+// 	else if (action.type === 'createCountry') {
+// 		return {
+// 			...prevState, country: action.payload
+// 		}
+// 	}
+// }
 
 const Counter = () => {
-	const [total, setTotal] = useState(0)
-	const handleClickPlus = () => {
-		setTotal((prevTotal)=>prevTotal+1)
-		// setState((prevState) => ({total: prevState.total + 1}))
-	}
+	// const [total, setTotal] = useState(0)
+	const [total, setTotal] = useReducer(reducer, 0)
 
-	const handleClickMinus = () => {
-		setTotal((prevTotal)=>prevTotal-1)
-		// setState((prevState) => ({total: prevState.total - 1}))
-	}
+	// const [state, dispatch] = useReducer(reducer, {
+	// 	user: null,
+	// 	country: '',
+	// 	items: []
+	// })
+
+	// dispatch({ type: 'createUser', payload: { name: 'Alex' } })
+	// dispatch({ type: 'createCountry', payload: 'Ukraine' })
+	
+
+	// const handleClickPlus = () => {
+	// 	setTotal((prevTotal)=>prevTotal+1)
+	// }
+
+	const handleClickPlus = () => setTotal({type:'increment', payload:1})
+
+	const handleClickMinus = () => setTotal({type:'decrement', payload:1})
+
+	// const handleClickMinus = () => {
+	// 	setTotal((prevTotal)=>prevTotal-1)
+	// }
 
   return (
 	<div className='position-absolute top-50 start-50 translate-middle'>

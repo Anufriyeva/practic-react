@@ -1,33 +1,34 @@
 import Header from './Header/Header'
 // import Counter from './Counter/Counter'
-import Modal from './Modal/Modal'
+// import Modal from './Modal/Modal'
 import { Component, useState } from 'react'
-import TodoList from "./TodoList/TodoList"
-import FormLogin from './FormLogin/FormLogin'
-import { nanoid } from 'nanoid'
-import Search from './Search/Search'
-import ContentInfo from './ContentInfo/ContentInfo'
+// import TodoList from "./TodoList/TodoList"
+// import FormLogin from './FormLogin/FormLogin'
+// import { nanoid } from 'nanoid'
+// import Search from './Search/Search'
+// import ContentInfo from './ContentInfo/ContentInfo'
 import { Toaster } from 'react-hot-toast'
+import TestUseMemo from './TestUseMemo/TestUseMemo'
 
 const App = () => {
   const [isShowModal, setIsShowModal] = useState(false)
-  const [searchText, setSearchText] = useState('')
+  // const [searchText, setSearchText] = useState('')
 
   const showModal = () => setIsShowModal(true)
 
-  const closeModal = () => setIsShowModal(false)
+  // const closeModal = () => setIsShowModal(false)
 
-  function createUser(data) {
-    const newUser = {
-      ...data,
-      id: nanoid()
-    }
-    console.log('newUser :>> ', newUser)
-  }
+  // function createUser(data) {
+  //   const newUser = {
+  //     ...data,
+  //     id: nanoid()
+  //   }
+  //   console.log('newUser :>> ', newUser)
+  // }
   
-  const handleSearch = (searchText) => {
-    setSearchText(searchText)
-  }
+  // const handleSearch = (searchText) => {
+  //   setSearchText(searchText)
+  // }
   
   return (
     <div className='container'>
@@ -37,16 +38,17 @@ const App = () => {
       />
       <Header showModal={showModal} />
       {/* <Counter /> */}
-      <Search handleSearch={handleSearch} />
-      <ContentInfo searchText={searchText} />
-      <TodoList/>
-      {isShowModal &&
+      {/* <Search handleSearch={handleSearch} /> */}
+      {/* <ContentInfo searchText={searchText} /> */}
+      {/* <TodoList/> */}
+      {/* {isShowModal &&
         (<Modal closeModal={closeModal}>
           <FormLogin
             closeModal={closeModal}
             createUser={createUser} />
         </Modal>
-        )}
+        )} */}
+      <TestUseMemo/>
     </div>
   )
 }
