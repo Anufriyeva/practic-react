@@ -1,15 +1,19 @@
-import React, { Component, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 // import todo from '../../todo.json'
 import ToDo from '../ToDo/ToDo'
 import FormToDo from '../FormToDo/FormToDo'
 import { nanoid } from 'nanoid'
 import toast from 'react-hot-toast'
+import FormFilterTodo from '../FormToDo/FormFilterTodo'
+import { useSearchParams } from 'react-router-dom'
 
 
 const TodoList = () => {
 	const [todoList, setTodoList] = useState('')
-	// const [isDelete, setIsDelete] = useState(false)
-	// const [isCreate, setIsCreate] = useState(false)
+	const [filteredTodoList, setFilteredTodoList] = useState(todoList)
+
+	const [searchParams, setSearchParams] = useSearchParams()
+	const filterText = searchParams.get('filter') ?? ''
 
 	useEffect(() => {
 		const localTodo = localStorage.getItem('todo')
@@ -21,7 +25,16 @@ const TodoList = () => {
 		todoList && localStorage.setItem('todo', JSON.stringify(todoList))
 	}, [todoList])
 	
-	
+	useEffect(() => {
+		todoList &&
+			setFilteredTodoList(
+				todoList.filter((todo) =>
+					todo.title
+						.toLowerCase()
+						.includes(filterText.trim().toLowerCase())
+				)
+			)
+	}, [filterText, searchParams, todoList])
 
 	const handleCheckCompleted = (id) => {
 		setTodoList((prevTodoList) => {
@@ -61,21 +74,15 @@ const TodoList = () => {
 
   return (
 			<>
-				<h1>My To-Do list</h1>
-				{/* {isDelete && (
-					<div className='alert alert-danger' role='alert'>
-						To-do delete successfully!
-					</div>
-				)}
-				{isCreate && (
-					<div className='alert alert-success' role='alert'>
-						Create to-do successfully!
-					</div>
-				)} */}
+		  <h1>My To-Do list</h1>
+		  <FormFilterTodo
+				setSearchParams={setSearchParams}
+				filterText={filterText}
+			/>
 				<FormToDo addToDo={addToDo} />
-				{todoList && (
+				{filteredTodoList && (
 					<ul className='list-group list-group-flush'>
-						{todoList.map((todo) => (
+						{filteredTodoList.map((todo) => (
 							<ToDo
 								key={todo.id}
 								todo={todo}

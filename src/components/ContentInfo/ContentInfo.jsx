@@ -1,4 +1,4 @@
-import { Component, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getNews } from "../../services/getNews";
 import ErrorCard from "../ErrorCard/ErrorCard";
 import { useCustomContext } from "../../testContext/Context/Context";
