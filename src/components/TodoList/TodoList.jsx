@@ -6,20 +6,25 @@ import { nanoid } from 'nanoid'
 import toast from 'react-hot-toast'
 import FormFilterTodo from '../FormToDo/FormFilterTodo'
 import { useSearchParams } from 'react-router-dom'
+import { createTodo } from '../../store/todo/actions'
+import { useDispatch, useSelector } from 'react-redux'
 
 
 const TodoList = () => {
-	const [todoList, setTodoList] = useState('')
+	// const [todoList, setTodoList] = useState('')
+	const { todo: todoList } = useSelector((state) => state.todo)
+	
 	const [filteredTodoList, setFilteredTodoList] = useState(todoList)
 
 	const [searchParams, setSearchParams] = useSearchParams()
 	const filterText = searchParams.get('filter') ?? ''
+	const dispatch = useDispatch()
 
-	useEffect(() => {
-		const localTodo = localStorage.getItem('todo')
-		if (localTodo)
-			setTodoList(JSON.parse(localTodo))
-	}, [])
+	// useEffect(() => {
+	// 	const localTodo = localStorage.getItem('todo')
+	// 	if (localTodo)
+	// 		setTodoList(JSON.parse(localTodo))
+	// }, [])
 
 	useEffect(() => {
 		todoList && localStorage.setItem('todo', JSON.stringify(todoList))
@@ -36,40 +41,32 @@ const TodoList = () => {
 			)
 	}, [filterText, searchParams, todoList])
 
-	const handleCheckCompleted = (id) => {
-		setTodoList((prevTodoList) => {
-			return prevTodoList.map((todo) =>
-				todo.id === id
-					? { ...todo, completed: !todo.completed }
-					: todo
-			)			
-		})
-	}
+	// const handleCheckCompleted = (id) => {
+	// 	setTodoList((prevTodoList) => {
+	// 		return prevTodoList.map((todo) =>
+	// 			todo.id === id
+	// 				? { ...todo, completed: !todo.completed }
+	// 				: todo
+	// 		)			
+	// 	})
+	// }
     
-	const handleDelete = (id) => {
-		setTodoList((prevTodoList) => {
-			return prevTodoList.filter((todo) => todo.id !== id)
-		})
-		toast.error('Deleted successfully ')
-		// setIsDelete(true)
-		// setTimeout(() => {
-		// 	setIsDelete(false)
-		// 	}, 1500)
-	}
+	// const handleDelete = (id) => {
+	// 	setTodoList((prevTodoList) => {
+	// 		return prevTodoList.filter((todo) => todo.id !== id)
+	// 	})
+	// 	toast.error('Deleted successfully ')
+	// }
 
 	const addToDo = (value) => {
-		setTodoList((prevTodoList) => {
-			return [
-					...prevTodoList,
-					{ "id": nanoid(), "title": value, "completed": false }
-				]
-		})
-
+		// setTodoList((prevTodoList) => {
+		// 	return [
+		// 			...prevTodoList,
+		// 			{ id: nanoid(), title: value, completed: false }
+		// 		]
+		// })
+		dispatch (createTodo(value))
 		toast.success('Created successfully ')
-		// setIsCreate(true)
-		// setTimeout(() => {
-		// 	setIsCreate(false)
-		// 	}, 1500)
 	}
 
   return (
@@ -86,8 +83,8 @@ const TodoList = () => {
 							<ToDo
 								key={todo.id}
 								todo={todo}
-								handleCheckCompleted={handleCheckCompleted}
-								handleDelete={handleDelete}
+								// handleCheckCompleted={handleCheckCompleted}
+								// handleDelete={handleDelete}
 							/>
 						))}
 					</ul>
