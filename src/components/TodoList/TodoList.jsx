@@ -26,9 +26,9 @@ const TodoList = () => {
 	// 		setTodoList(JSON.parse(localTodo))
 	// }, [])
 
-	useEffect(() => {
-		todoList && localStorage.setItem('todo', JSON.stringify(todoList))
-	}, [todoList])
+	// useEffect(() => {
+	// 	todoList && localStorage.setItem('todo', JSON.stringify(todoList))
+	// }, [todoList])
 	
 	useEffect(() => {
 		todoList &&
@@ -41,22 +41,22 @@ const TodoList = () => {
 			)
 	}, [filterText, searchParams, todoList])
 
-	// const handleCheckCompleted = (id) => {
-	// 	setTodoList((prevTodoList) => {
-	// 		return prevTodoList.map((todo) =>
-	// 			todo.id === id
-	// 				? { ...todo, completed: !todo.completed }
-	// 				: todo
-	// 		)			
-	// 	})
-	// }
+	const handleCheckCompleted = (id) => {
+		// setTodoList((prevTodoList) => {
+		// 	return prevTodoList.map((todo) =>
+		// 		todo.id === id
+		// 			? { ...todo, completed: !todo.completed }
+		// 			: todo
+		// 	)			
+		// })
+	}
     
-	// const handleDelete = (id) => {
-	// 	setTodoList((prevTodoList) => {
-	// 		return prevTodoList.filter((todo) => todo.id !== id)
-	// 	})
-	// 	toast.error('Deleted successfully ')
-	// }
+	const handleDelete = (id) => {
+		// setTodoList((prevTodoList) => {
+		// 	return prevTodoList.filter((todo) => todo.id !== id)
+		// })
+		toast.error('Deleted successfully ')
+	}
 
 	const addToDo = (value) => {
 		// setTodoList((prevTodoList) => {
@@ -83,8 +83,8 @@ const TodoList = () => {
 							<ToDo
 								key={todo.id}
 								todo={todo}
-								// handleCheckCompleted={handleCheckCompleted}
-								// handleDelete={handleDelete}
+								handleCheckCompleted={handleCheckCompleted}
+								handleDelete={handleDelete}
 							/>
 						))}
 					</ul>
