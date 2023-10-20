@@ -1,10 +1,13 @@
+import { useDispatch } from "react-redux"
 import { NavLink, Navigate, useNavigate } from "react-router-dom"
+import { getNewsThunk } from "../../store/news/newsReducer"
 
 const Header = ({ showModal }) => {
 	const navigate = useNavigate()
 	const handleLogin = () => {
 		2 + 2 ? navigate('/login') : navigate('/')
 	}
+	const dispatch = useDispatch()
 	// return <Navigate to={'/login'}/>
 
 	return (
@@ -41,6 +44,14 @@ const Header = ({ showModal }) => {
 					onClick={handleLogin}
 				>
 					Login
+				</button>
+				<button
+					className='btn btn-outline-success'
+					onClick={() => {
+						dispatch(getNewsThunk())
+					}}
+				>
+					thunk
 				</button>
 			</div>
 		</nav>

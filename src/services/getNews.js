@@ -7,4 +7,13 @@ export const getNews = (searchText) => {
             'X-Api-Key': API_KEY,
         },
     })
-    }
+}
+    
+export const getTopNews = async () => {
+	const data = await fetch(`${BASE_URL}/top-headlines?country=us`, {
+		headers: {
+			'X-Api-Key': API_KEY,
+		},
+	})
+	return await data.json()
+}
