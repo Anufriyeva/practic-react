@@ -23,6 +23,7 @@ const LoginPage = lazy(() => import('./pages/LoginPage'))
 const ToDoDetails = lazy(() => import('./ToDo/ToDoDetails'))
 const TodoPage = lazy(() => import('./pages/TodoPage'))
 const NewsPage = lazy(() => import('./pages/NewsPage'))
+const ProductsPage = lazy(() => import('./pages/ProductsPage'))
 
 const App = () => {
   
@@ -33,6 +34,8 @@ const App = () => {
         <Route path='news' element={<NewsPage/>}/>
         <Route path='todo' element={<TodoPage />} />
         <Route path='todo/:id' element={<ToDoDetails />} />
+        <Route path='products' element={<ProductsPage />} />
+        
       </Route>
       <Route
 				path='/login'

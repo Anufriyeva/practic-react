@@ -12,6 +12,7 @@ import {
 } from 'redux-persist'
     
 import storage from 'redux-persist/lib/storage' // defaults to localStorage for web
+import { productsApi } from './products/productsApi'
 
 
 const persistConfig = {
@@ -39,9 +40,9 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, reducer)
 
 export const store = configureStore({
-    reducer: persistedReducer,
-    // middleware: [customMiddle],
-    middleware: (getDefaultMiddleware) =>
+	reducer: persistedReducer,
+	// middleware: [customMiddle],
+	middleware: (getDefaultMiddleware) =>
 		getDefaultMiddleware({
 			serializableCheck: {
 				ignoredActions: [
@@ -53,7 +54,9 @@ export const store = configureStore({
 					REGISTER,
 				],
 			},
-		}),
+		}).concat(productsApi.middleware),
+	// middleware: (getDefaultMiddleware) =>
+	// 	getDefaultMiddleware().concat(productsApi.middleware),
 })
 
 export const persistor = persistStore(store)

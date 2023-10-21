@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux"
-import { NavLink, Navigate, useNavigate } from "react-router-dom"
+import { NavLink, useNavigate } from "react-router-dom"
 import { getNewsThunk } from "../../store/news/thunk"
 
 const Header = ({ showModal }) => {
@@ -8,7 +8,6 @@ const Header = ({ showModal }) => {
 		2 + 2 ? navigate('/login') : navigate('/')
 	}
 	const dispatch = useDispatch()
-	// return <Navigate to={'/login'}/>
 
 	return (
 		<nav className='navbar bg-dark mb-3 navbar-expand-lg'>
@@ -34,11 +33,15 @@ const Header = ({ showModal }) => {
 						<NavLink className='nav-link text-white' to='/todo'>
 							Todo
 						</NavLink>
+						<NavLink className='nav-link text-white' to='/products'>
+							Products
+						</NavLink>
 					</div>
 				</div>
 				<button className='btn btn-outline-success' onClick={showModal}>
 					Open Modal
 				</button>
+
 				<button
 					className='btn btn-outline-success'
 					onClick={handleLogin}
