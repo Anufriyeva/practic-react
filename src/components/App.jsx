@@ -17,6 +17,8 @@ import HomePage from './pages/HomePage'
 import Layout from './Layout/Layout'
 // import ToDoDetails from './ToDo/ToDoDetails'
 import { Suspense, lazy } from 'react'
+import RegistrationPage from './pages/RegistrationPage'
+import { useSelector } from 'react-redux'
 // import LoginPage from './pages/LoginPage'
 
 const LoginPage = lazy(() => import('./pages/LoginPage'))
@@ -26,7 +28,7 @@ const NewsPage = lazy(() => import('./pages/NewsPage'))
 const ProductsPage = lazy(() => import('./pages/ProductsPage'))
 
 const App = () => {
-  
+  const isAuth = useSelector((state) => state.auth.access_token)
   return (
     <Routes>
       <Route path='/' element={<Layout />}>
@@ -42,6 +44,14 @@ const App = () => {
 				element={
 					<Suspense>
 						<LoginPage />
+					</Suspense>
+				}
+      />
+      <Route
+				path='/signUp'
+				element={
+					<Suspense>
+						<RegistrationPage />
 					</Suspense>
 				}
 			/>

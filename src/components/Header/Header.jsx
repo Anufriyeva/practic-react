@@ -1,13 +1,31 @@
-import { useDispatch } from "react-redux"
+import { useDispatch, useSelector } from "react-redux"
 import { NavLink, useNavigate } from "react-router-dom"
 import { getNewsThunk } from "../../store/news/thunk"
+import { dellToken } from "../../services/auth-service"
+import { logOut } from "../../store/auth/slice"
+import { useEffect } from "react"
+import { getProfileThunk } from "../../store/auth/thunk"
 
 const Header = ({ showModal }) => {
+
+	const { profile, access_token } = useSelector((state) => state.auth)
+
 	const navigate = useNavigate()
 	const handleLogin = () => {
-		2 + 2 ? navigate('/login') : navigate('/')
+		navigate('/login')
 	}
+
 	const dispatch = useDispatch()
+
+	const handleLogOut = () => {
+		dispatch(logOut())
+		dellToken()
+	}
+
+	useEffect(() => {
+		console.log('object')
+		access_token && dispatch(getProfileThunk())
+	}, [access_token, dispatch])
 
 	return (
 		<nav className='navbar bg-dark mb-3 navbar-expand-lg'>
@@ -25,8 +43,11 @@ const Header = ({ showModal }) => {
 							aria-current='page'
 							to='/'
 						>
-							Home
 						</NavLink>
+							Home
+							
+						{access_token && (
+							<>
 						<NavLink className='nav-link text-white' to='/news'>
 							News
 						</NavLink>
@@ -35,18 +56,21 @@ const Header = ({ showModal }) => {
 						</NavLink>
 						<NavLink className='nav-link text-white' to='/products'>
 							Products
-						</NavLink>
+							</NavLink>
+						</>
+						)}
 					</div>
 				</div>
 				<button className='btn btn-outline-success' onClick={showModal}>
 					Open Modal
 				</button>
+				{profile && <div className='text-white'>{profile.name}</div>}
 
 				<button
 					className='btn btn-outline-success'
-					onClick={handleLogin}
+					onClick={profile ? handleLogOut : handleLogin}
 				>
-					Login
+					{profile ? 'LogOut' : 'LogIn'}
 				</button>
 				<button
 					className='btn btn-outline-success'
