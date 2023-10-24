@@ -19,7 +19,7 @@ const persistConfig = {
     key: 'todoS',
     storage,
     // blacklist: ['counter'],
-    whitelist: ['todo'],
+    whitelist: ['todo', 'auth'],
 }
 
 //мідлваре працює під капотом

@@ -3,8 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom"
 import { getNewsThunk } from "../../store/news/thunk"
 import { dellToken } from "../../services/auth-service"
 import { logOut } from "../../store/auth/slice"
-import { useEffect } from "react"
-import { getProfileThunk } from "../../store/auth/thunk"
+// import { useEffect } from "react"
+// import { getProfileThunk } from "../../store/auth/thunk"
 
 const Header = ({ showModal }) => {
 
@@ -22,10 +22,10 @@ const Header = ({ showModal }) => {
 		dellToken()
 	}
 
-	useEffect(() => {
-		console.log('object')
-		access_token && dispatch(getProfileThunk())
-	}, [access_token, dispatch])
+	// useEffect(() => {
+	// 	console.log('object')
+	// 	access_token && dispatch(getProfileThunk())
+	// }, [access_token, dispatch])
 
 	return (
 		<nav className='navbar bg-dark mb-3 navbar-expand-lg'>
@@ -43,11 +43,12 @@ const Header = ({ showModal }) => {
 							aria-current='page'
 							to='/'
 						>
-						</NavLink>
 							Home
+						</NavLink>
 							
-						{access_token && (
-							<>
+							
+						{/* {access_token && (
+							<> */}
 						<NavLink className='nav-link text-white' to='/news'>
 							News
 						</NavLink>
@@ -57,8 +58,8 @@ const Header = ({ showModal }) => {
 						<NavLink className='nav-link text-white' to='/products'>
 							Products
 							</NavLink>
-						</>
-						)}
+						{/* </>
+						)} */}
 					</div>
 				</div>
 				<button className='btn btn-outline-success' onClick={showModal}>
